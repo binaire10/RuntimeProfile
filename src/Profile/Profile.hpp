@@ -11,14 +11,14 @@ namespace Profile
 {
     class sink;
 
-    using duration_type = std::chrono::duration<float, std::micro>;
+    using duration = std::chrono::duration<float, std::micro>;
 
     struct ScopeProfile
     {
         std::string_view name;
         std::thread::id  threadId;
-        duration_type    start;
-        duration_type    elapsedTime;
+        duration    start;
+        duration    elapsedTime;
     };
 
     void submit(const ScopeProfile &profile);
@@ -92,8 +92,8 @@ namespace Profile
 
         ~RecordProfile()
         {
-            capture.start       = start.time_since_epoch();
-            capture.elapsedTime = std::chrono::duration_cast<Profile::duration_type>(chrono_type::now() - start);
+            capture.start       = std::chrono::duration_cast<Profile::duration>(start.time_since_epoch());
+            capture.elapsedTime = std::chrono::duration_cast<Profile::duration>(chrono_type::now() - start);
             Profile::submit(capture);
         }
 
