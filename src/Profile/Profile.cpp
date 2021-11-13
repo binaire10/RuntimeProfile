@@ -17,13 +17,19 @@ void Profile::json_coder::begin(std::ostream &out) { out << R"({"otherData":{},"
 void Profile::json_coder::write(std::ostream &out, const Profile::ScopeProfile &result)
 {
 
-    out << std::setprecision(3) << std::fixed << ",{"
-        << R"("cat":"function",)"
-        << R"("dur":)" << result.elapsedTime.count() << ',' << R"("name":")" << result.name << "\","
-        << R"("ph":"X",)"
-        << R"("pid":0,)"
-        << R"("tid":)" << result.threadId << ","
-        << R"("ts":)" << result.start.count() << "}";
+    out << std::setprecision(3) << std::fixed
+        << ",{"
+           R"("cat":"function",)"
+           R"("dur":)"
+        << result.elapsedTime.count() << ',' << R"("name":")" << result.name
+        << "\","
+           R"("ph":"X",)"
+           R"("pid":0,)"
+           R"("tid":)"
+        << result.threadId
+        << ","
+           R"("ts":)"
+        << result.start.count() << "}";
 }
 
 void Profile::json_coder::end(std::ostream &out) { out << "]}"; }

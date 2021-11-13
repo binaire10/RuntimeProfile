@@ -146,8 +146,9 @@ namespace Profile
 
         ~RecordProfile()
         {
+            auto end = chrono_type::now();
             capture.start       = std::chrono::duration_cast<Profile::duration>(start.time_since_epoch());
-            capture.elapsedTime = std::chrono::duration_cast<Profile::duration>(chrono_type::now() - start);
+            capture.elapsedTime = std::chrono::duration_cast<Profile::duration>(end - start);
             logger.submit(capture);
         }
 
