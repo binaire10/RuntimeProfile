@@ -46,9 +46,6 @@ namespace Profile
         std::vector<std::shared_ptr<sink>> sinks;
     };
 
-    void submit(const ScopeProfile &profile);
-    void register_sink(std::shared_ptr<sink> sink);
-
     class sink
     {
     public:
@@ -100,6 +97,7 @@ namespace Profile
 
     template<typename MutexT>
     using stream_json_sink = stream_sink<MutexT, json_coder>;
+
 #ifdef HAS_BOOST
     namespace net = boost::asio;
 
