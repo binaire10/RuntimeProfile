@@ -18,7 +18,8 @@ namespace Profile
 
     using duration = std::chrono::duration<float, std::micro>;
 
-    class NullMutex {
+    class NullMutex
+    {
     public:
         constexpr void lock() {}
         constexpr void unlock() {}
@@ -138,21 +139,22 @@ namespace Profile
         using time_point  = typename chrono_type::time_point;
 
         inline RecordProfile(Logger &logger, std::string_view name)
-            : logger{logger}, start{ chrono_type::now() }
+            : logger{ logger }
             , capture{ name, std::this_thread::get_id() }
+            , start{ chrono_type::now() }
         {}
 
         ~RecordProfile()
         {
-            auto end = chrono_type::now();
+            auto end            = chrono_type::now();
             capture.start       = std::chrono::duration_cast<Profile::duration>(start.time_since_epoch());
             capture.elapsedTime = std::chrono::duration_cast<Profile::duration>(end - start);
             logger.submit(capture);
         }
 
-        Logger &logger;
-        time_point            start;
+        Logger               &logger;
         Profile::ScopeProfile capture;
+        time_point            start;
     };
 }// namespace Profile
 
