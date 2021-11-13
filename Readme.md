@@ -9,7 +9,9 @@ By default, no sink is set;
 ```cpp
 #include <Profile/SteadyClockProfiler.hpp>
 
-#define PROFILE_FUNCTION() STEADY_CLOCK_PROFILE_FUNCTION()
+Profile::Logger log;
+
+#define PROFILE_FUNCTION() STEADY_CLOCK_PROFILE_FUNCTION(log)
 
 void foo() {
     PROFILE_FUNCTION();
@@ -21,9 +23,11 @@ void foo() {
 ```cpp
 #include <Profile/SteadyClockProfiler.hpp>
 
+Profile::Logger log;
+
 int main() {
     // register an output sink to save the captured
-    Profile::register_sink(
+    log.register_sink(
             std::make_shared<Profile::stream_json_sink<std::mutex>>(std::cout)
             );
 }
